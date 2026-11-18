@@ -1,0 +1,261 @@
+{
+  "id": "guizang-design",
+  "version": "0.1.1",
+  "name": "歸藏设计",
+  "description": "使用设计技能、创作工作流和语气档案，在工作区管理作品。",
+  "icon": "builtin-extension:design-tools",
+  "scope": "global",
+  "surface": {
+    "kind": "sidebar",
+    "entry": "gallery/panel.html",
+    "title": "歸藏设计"
+  },
+  "domain": {
+    "entry": "domain.mjs",
+    "queries": [
+      "voice.show",
+      "skill.location",
+      "work.read",
+      "catalog",
+      "example.html"
+    ],
+    "commands": [
+      "voice.save",
+      "voice.note",
+      "work.save",
+      "work.relink",
+      "work.remove"
+    ],
+    "events": [
+      "state.changed"
+    ],
+    "queryDefs": [
+      {
+        "id": "voice.show",
+        "title": "读取语气档案",
+        "permission": "read",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      {
+        "id": "skill.location",
+        "title": "查询技能目录及示例目录",
+        "permission": "read",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "skill": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "skill"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "id": "work.read",
+        "title": "读取作品内容",
+        "permission": "read",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "id": "catalog",
+        "title": "读取创作目录",
+        "permission": "read",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "lang": {
+              "enum": [
+                "zh",
+                "en"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      {
+        "id": "example.html",
+        "title": "读取自包含示例",
+        "permission": "read",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "lang": {
+              "enum": [
+                "zh",
+                "en"
+              ]
+            },
+            "id": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    ],
+    "commandDefs": [
+      {
+        "id": "voice.save",
+        "title": "保存语气档案",
+        "permission": "edit",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "id": "voice.note",
+        "title": "记录用户措辞修正",
+        "permission": "edit",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "id": "work.save",
+        "title": "登记或更新作品",
+        "permission": "edit",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "skill": {
+              "type": "string"
+            },
+            "html": {
+              "type": "string"
+            },
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "theme": {
+              "type": "string"
+            },
+            "column": {
+              "type": "string"
+            },
+            "relativePath": {
+              "type": "string",
+              "description": "已生成文件相对于项目根的路径"
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "skill"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "id": "work.relink",
+        "title": "重新关联已有作品",
+        "permission": "edit",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "previousSessionId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "previousSessionId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "id": "work.remove",
+        "title": "移出作品库",
+        "permission": "edit",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    ]
+  },
+  "agent": {
+    "profile": "scheduler-pi",
+    "systemPrompt": "agent.md",
+    "skills": [
+      "skills/guizang-page-skill/SKILL.md",
+      "skills/guizang-ppt-skill/SKILL.md",
+      "skills/guizang-social-card-skill/SKILL.md",
+      "skills/guizang-voice/SKILL.md",
+      "skills/humanizer-zh/SKILL.md"
+    ],
+    "mcp": []
+  },
+  "data": {
+    "workspace": true,
+    "shared": false
+  },
+  "permissions": [
+    "agent.state",
+    "agent.commands",
+    "data",
+    "theme",
+    "media",
+    "files",
+    "exports",
+    "project.tasks"
+  ]
+}

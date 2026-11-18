@@ -1,0 +1,16 @@
+{
+  "name": "muster-extension-guizang-design",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.mjs && vitest run --environment jsdom --globals"
+  },
+  "devDependencies": {
+    "vitest": "3.2.7",
+    "jsdom": "30.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/dom": "10.4.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
